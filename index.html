@@ -649,7 +649,7 @@
 <!-- PAGE PAIEMENT -->
 <div id="page-payment" class="page">
     <div class="payment-section">
-        <button class="payment-back" onclick="openCart()">← Retour au panier</button>
+        <button class="payment-back" onclick="openCartPanel()">← Retour au panier</button>
         <div class="payment-title">Paiement</div>
         <div class="payment-sub">Choisissez votre mode de règlement</div>
         <div class="payment-recap" id="payment-recap"></div>
@@ -755,7 +755,16 @@
     </div>
 </div>
 
-<!-- OVERLAY CART supprimé -->
+<!-- OVERLAY CART -->
+<div class="overlay" id="cart-overlay">
+    <div class="panel">
+        <div class="panel-header">
+            <h2 class="panel-title">Mon panier</h2>
+            <button class="panel-close" onclick="closeCart()">✕</button>
+        </div>
+        <div id="cart-contents"></div>
+    </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -1475,25 +1484,40 @@ const wiz=(()=>{
 
 // ─────────────── CART ───────────────
 
+let _pendingCheckout = false;
+
 function updateCart(){
     const count=cart.length;
-    const total=cart.reduce((s,i)=>s+i.price,0);
     document.getElementById('cart-badge').textContent=count;
-
-    // panier direct paiement
+    // Rafraîchit le contenu si l'overlay est ouvert
+    const overlay=document.getElementById('cart-overlay');
+    if(overlay&&overlay.classList.contains('open')) renderCartContents();
 }
 
-
-
-function flashCartBar(){
-    // cart bar supprimée
+// Ouvre toujours l'overlay panier (voir + modifier les articles)
+function openCart(){
+    renderCartContents();
+    document.getElementById('cart-overlay').classList.add('open');
 }
-function openCart(){if(cart.length===0){toast('Votre panier est vide');return;}renderPaymentPage();showPage('payment');}
-function closeCart(){}
+
+// "Retour au panier" depuis la page paiement
+function openCartPanel(){
+    showPage('home');
+    renderCartContents();
+    document.getElementById('cart-overlay').classList.add('open');
+}
+
+function closeCart(){
+    document.getElementById('cart-overlay').classList.remove('open');
+}
 
 function renderCartContents(){
     const el=document.getElementById('cart-contents');
-    if(cart.length===0){el.innerHTML=`<div class="cart-empty-msg"><strong>Votre panier est vide</strong>Ajoutez des plats depuis la carte ou le menu guidé.</div>`;return;}
+    if(!el) return;
+    if(cart.length===0){
+        el.innerHTML=`<div class="cart-empty-msg"><strong>Votre panier est vide</strong>Ajoutez des plats depuis la carte ou le menu guidé.</div>`;
+        return;
+    }
     const total=cart.reduce((s,i)=>s+i.price,0);
     el.innerHTML=cart.map((item,i)=>`
         <div class="cart-line">
@@ -1508,8 +1532,24 @@ function renderCartContents(){
     +`<div class="cart-total-row"><span>Total</span><span class="total-amount">${fmt(total)}</span></div>
        <button class="checkout-btn" onclick="checkout()">Valider la commande →</button>`;
 }
-function removeFromCart(i){cart.splice(i,1);updateCart();renderCartContents();}
-function checkout(){closeCart();renderPaymentPage();showPage('payment');}
+
+function removeFromCart(i){
+    cart.splice(i,1);
+    updateCart();
+}
+
+// Valider : si mode non choisi → tunnel d'abord, puis revient au paiement
+function checkout(){
+    if(!orderContext.mode){
+        _pendingCheckout=true;
+        closeCart();
+        openTunnel();
+        return;
+    }
+    closeCart();
+    renderPaymentPage();
+    showPage('payment');
+}
 
 // ─────────────── PAIEMENT ───────────────
 let selectedPaymentMethod=null;
