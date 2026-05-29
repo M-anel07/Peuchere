@@ -548,6 +548,43 @@
         /* Tier badge dans la carte */
         .menu-item--card .tier-badge { margin-bottom: 2px; }
 
+        /* HORAIRES */
+        .hours-table { width:100%; border-collapse:collapse; }
+        .hours-table tr { border-bottom:1px solid var(--border); }
+        .hours-table tr:last-child { border-bottom:none; }
+        .hours-day { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; color:var(--text); padding:12px 16px; width:110px; }
+        .hours-time { font-size:13px; color:var(--text-sub); padding:12px 16px 12px 0; }
+        .hours-closed { color:var(--text-muted); font-style:italic; }
+        .hours-today { background:var(--brand-light); }
+        .hours-today .hours-day { color:var(--brand); font-weight:700; }
+        .hours-today .hours-time { color:var(--brand); font-weight:600; }
+
+        /* VIANDE CHOICE OVERLAY */
+        .viande-choice-btn { display:flex; align-items:center; gap:14px; width:100%; padding:16px; border:1.5px solid var(--border); border-radius:14px; background:var(--surface); cursor:pointer; transition:all 0.15s; margin-bottom:10px; font-family:'DM Sans',sans-serif; }
+        .viande-choice-btn:hover { border-color:var(--brand); background:var(--brand-light); }
+        .viande-choice-emoji { font-size:28px; flex-shrink:0; }
+        .viande-choice-name { flex:1; font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--text); text-align:left; }
+        .viande-choice-arrow { font-size:18px; color:var(--brand); font-weight:700; flex-shrink:0; }
+
+        /* UPSELL POPUP */
+        .upsell-question { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--text); margin-bottom:4px; }
+        .upsell-sub { font-size:13px; color:var(--text-muted); margin-bottom:18px; }
+        .upsell-section-title { font-family:'Syne',sans-serif; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-sub); margin:14px 0 8px; }
+        .upsell-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        .upsell-item-card { background:var(--bg); border:1.5px solid var(--border); border-radius:12px; padding:10px 8px; cursor:pointer; transition:all 0.15s; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; }
+        .upsell-item-card:hover { border-color:var(--brand); background:var(--brand-light); transform:scale(1.02); }
+        .upsell-item-icon { font-size:24px; }
+        .upsell-item-img { width:56px; height:56px; border-radius:10px; overflow:hidden; flex-shrink:0; background:var(--brand-light); display:flex; align-items:center; justify-content:center; }
+        .upsell-item-img .prod-img { width:100%; height:100%; object-fit:cover; border-radius:10px; display:block; }
+        .upsell-item-name { font-size:12px; font-weight:600; color:var(--text); }
+        .upsell-item-price { font-size:11px; font-weight:700; color:var(--brand); background:var(--brand-light); padding:1px 7px; border-radius:5px; }
+
+        /* Boutons non merci & skip upsell */
+        .upsell-non-merci-btn { background:var(--bg); color:var(--text-muted); border:1.5px solid var(--border); border-radius:20px; padding:6px 14px; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+        .upsell-non-merci-btn:hover { background:var(--brand-light); border-color:var(--brand-mid); color:var(--brand); }
+        .upsell-skip-btn { width:100%; margin-top:16px; padding:14px 20px; background:linear-gradient(135deg,var(--bg),var(--brand-light)); border:1.5px solid rgba(200,90,30,0.2); border-radius:14px; font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--text-sub); cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:all 0.2s; }
+        .upsell-skip-btn:hover { background:var(--brand-light); border-color:var(--brand); color:var(--brand); transform:scale(1.01); }
+
         /* Grille : retrait du gap vertical pour un rendu serré */
         .menu-grid-alacarte {
             display: grid;
@@ -663,12 +700,54 @@
 <div id="page-info" class="page">
     <div class="info-section">
         <div class="info-page-title">Infos &amp; Contact</div>
+
+        <!-- HORAIRES -->
+        <div class="info-sub-title">🕐 Horaires d'ouverture</div>
+        <div class="info-card" style="padding:0;overflow:hidden;">
+            <table class="hours-table">
+                <tr><td class="hours-day">Lundi</td><td class="hours-time hours-closed">Fermé</td></tr>
+                <tr class="hours-today"><td class="hours-day">Mardi</td><td class="hours-time">11h30 – 14h30 · 18h30 – 22h00</td></tr>
+                <tr><td class="hours-day">Mercredi</td><td class="hours-time">11h30 – 14h30 · 18h30 – 22h00</td></tr>
+                <tr><td class="hours-day">Jeudi</td><td class="hours-time">11h30 – 14h30 · 18h30 – 22h00</td></tr>
+                <tr><td class="hours-day">Vendredi</td><td class="hours-time">11h30 – 14h30 · 18h30 – 22h30</td></tr>
+                <tr><td class="hours-day">Samedi</td><td class="hours-time">11h30 – 15h00 · 18h30 – 22h30</td></tr>
+                <tr><td class="hours-day">Dimanche</td><td class="hours-time">11h30 – 15h00</td></tr>
+            </table>
+        </div>
+
+        <!-- CARTE GOOGLE MAP -->
+        <div class="info-sub-title">📍 Nous trouver</div>
+        <div class="info-card" style="padding:0;overflow:hidden;border-radius:var(--radius);">
+            <!-- Sélecteur de restaurant -->
+            <div style="display:flex;gap:0;border-bottom:1px solid var(--border);" id="map-resto-tabs">
+                <button onclick="switchMapResto('toulon',this)" class="map-resto-tab active" style="flex:1;padding:10px 6px;border:none;background:var(--brand-light);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--brand);cursor:pointer;border-right:1px solid var(--border);">Toulon</button>
+                <button onclick="switchMapResto('seyne',this)" class="map-resto-tab" style="flex:1;padding:10px 6px;border:none;background:var(--surface);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);cursor:pointer;border-right:1px solid var(--border);">La Seyne</button>
+                <button onclick="switchMapResto('garde',this)" class="map-resto-tab" style="flex:1;padding:10px 6px;border:none;background:var(--surface);font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text-muted);cursor:pointer;">La Garde</button>
+            </div>
+            <iframe id="map-iframe"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2899.8!2d5.9282!3d43.1248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91b6b3c3c3c3c%3A0x0!2s12+Rue+Jean+Jaur%C3%A8s%2C+83000+Toulon!5e0!3m2!1sfr!2sfr!4v1700000000001"
+                width="100%" height="220" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Localisation Peuchère"></iframe>
+            <div style="padding:14px 16px;border-top:1px solid var(--border);">
+                <div id="map-resto-name" style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">📌 Peuchère – Toulon Centre</div>
+                <div id="map-resto-addr" style="font-size:12px;color:var(--text-muted);">12 rue Jean Jaurès, 83000 Toulon</div>
+                <a id="map-resto-link" href="https://maps.google.com/?q=12+rue+Jean+Jaures+83000+Toulon" target="_blank"
+                   style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:var(--brand);color:#fff;padding:7px 14px;border-radius:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;text-decoration:none;">
+                    Ouvrir dans Maps →
+                </a>
+            </div>
+        </div>
+
+        <!-- COMMENT ÇA MARCHE -->
+        <div class="info-sub-title">Comment ça marche ?</div>
         <div class="info-card">
             <div class="how-step"><div class="step-num-circle">1</div><div class="how-step-body"><h4>Click &amp; Collect ou Livraison</h4><p>Choisissez votre mode directement depuis l'accueil. Pour la livraison, entrez votre adresse - on vérifie la zone automatiquement.</p></div></div>
             <div class="how-step"><div class="step-num-circle">2</div><div class="how-step-body"><h4>Composez votre commande</h4><p>À la carte ou via le menu guidé Plat + Boisson + Dessert.</p></div></div>
             <div class="how-step"><div class="step-num-circle">3</div><div class="how-step-body"><h4>Validez et payez</h4><p>CB, Apple Pay, Google Pay - ou espèces à la livraison.</p></div></div>
             <div class="how-step"><div class="step-num-circle">4</div><div class="how-step-body"><h4>On s'occupe du reste</h4><p>Livraison ~20 min ou Click &amp; Collect prêt en ~15 min.</p></div></div>
         </div>
+
         <div class="info-sub-title">Contact</div>
         <div class="info-card"><h3>Urgences</h3><p><a href="tel:+33XXXXXXXXX">Appelez-nous directement</a></p></div>
         <div class="info-card"><h3>Réclamations</h3><p>Email : <a href="mailto:contact@peuchere.fr">contact@peuchere.fr</a></p></div>
@@ -766,6 +845,33 @@
     </div>
 </div>
 
+<!-- OVERLAY CHOIX VIANDE -->
+<div class="overlay" id="viande-overlay">
+    <div class="panel" style="padding-bottom:40px;">
+        <div class="panel-header">
+            <div class="panel-title" id="viande-overlay-title">Choisissez votre viande</div>
+            <button class="panel-close" onclick="closeViandeOverlay()">✕</button>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">La patate douce garnie est disponible avec deux viandes au choix :</p>
+        <div id="viande-overlay-list"></div>
+    </div>
+</div>
+
+<!-- OVERLAY UPSELL -->
+<div class="overlay" id="upsell-overlay">
+    <div class="panel" style="padding-bottom:40px;">
+        <div class="panel-header" style="margin-bottom:4px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-muted);">Peuchère vous suggère</div>
+            <button class="upsell-non-merci-btn" onclick="closeUpsellOverlay()">Non merci ✕</button>
+        </div>
+        <div id="upsell-content"></div>
+        <button class="upsell-skip-btn" onclick="closeUpsellOverlay()">
+            <span>C'est parfait comme ça</span>
+            <span style="font-size:16px;">✓</span>
+        </button>
+    </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -801,10 +907,15 @@ const platsSimples = [
 const menuData = {
     get plats() { return [...platsPatate,...platsComposer,...platsSimples]; },
     saucesBase:[
-        {name:'Ketchup',price:0},{name:'Mayonnaise',price:0},{name:'Barbecue',price:0},{name:'Samouraï',price:0},
+        {name:'Ketchup',price:0.50,emoji:'🍅',img:'media/ketchup'},
+        {name:'Mayonnaise',price:0.50,emoji:'🫙',img:'media/mayonnaise'},
+        {name:'Barbecue',price:0.50,emoji:'🍖',img:'media/barbecue'},
+        {name:'Samouraï',price:0.50,emoji:'🌶️',img:'media/samurai'},
     ],
     saucesMaison:[
-        {name:'Crème ciboulette',price:0.50},{name:'Miel-moutarde',price:0.50},{name:'Caramel beurre salé',price:0.50},
+        {name:'Crème ciboulette',price:0.50,emoji:'🌿',img:'media/cremeCiboulette'},
+        {name:'Miel-moutarde',price:0.50,emoji:'🍯',img:'media/mielMoutarde'},
+        {name:'Caramel beurre salé',price:0.50,emoji:'🍮',img:'media/caramelBeurreSale'},
     ],
     supplements:[
         {name:'Topping fromage',price:1.50,desc:'Mozzarella',emoji:''},
@@ -838,9 +949,15 @@ const promos = [
 const deliveryZones=['toulon','la valette','la garde','la seyne','hyères','ollioules','solliès','six-fours'];
 
 const restaurants=[
-    {id:'toulon',name:'Peuchère Toulon Centre',addr:'12 rue Jean Jaurès, 83000 Toulon',emoji:''},
-    {id:'seyne',name:'Peuchère La Seyne-sur-Mer',addr:'5 avenue Victor Hugo, 83500 La Seyne',emoji:''},
-    {id:'garde',name:'Peuchère La Garde',addr:'3 boulevard de la République, 83130 La Garde',emoji:''},
+    {id:'toulon',name:'Peuchère Toulon Centre',addr:'12 rue Jean Jaurès, 83000 Toulon',emoji:'',
+     mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2899.8!2d5.9282!3d43.1248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91b6b3c3c3c3c%3A0x0!2s12+Rue+Jean+Jaur%C3%A8s%2C+83000+Toulon!5e0!3m2!1sfr!2sfr!4v1700000000001',
+     mapsLink:'https://maps.google.com/?q=12+rue+Jean+Jaures+83000+Toulon'},
+    {id:'seyne',name:'Peuchère La Seyne-sur-Mer',addr:'5 avenue Victor Hugo, 83500 La Seyne',emoji:'',
+     mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2899.8!2d5.8780!3d43.1020!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91a000000001%3A0x0!2s5+Avenue+Victor+Hugo%2C+83500+La+Seyne-sur-Mer!5e0!3m2!1sfr!2sfr!4v1700000000002',
+     mapsLink:'https://maps.google.com/?q=5+avenue+Victor+Hugo+83500+La+Seyne-sur-Mer'},
+    {id:'garde',name:'Peuchère La Garde',addr:'3 boulevard de la République, 83130 La Garde',emoji:'',
+     mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2899.8!2d6.0050!3d43.1250!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91c000000001%3A0x0!2s3+Boulevard+de+la+R%C3%A9publique%2C+83130+La+Garde!5e0!3m2!1sfr!2sfr!4v1700000000003',
+     mapsLink:'https://maps.google.com/?q=3+boulevard+de+la+Republique+83130+La+Garde'},
 ];
 
 const paymentMethods=[
@@ -857,12 +974,13 @@ let cust={cartIdx:null,item:null,removedIngredients:[],sauceType:'base',sauceCho
 // ─────────────── UTILS ───────────────
 const fmt=p=>p.toFixed(2).replace('.',',')+'\u202f€';
 
-// Rendu image produit - tente l'image, fallback emoji
+// Rendu image produit - tente .webp puis .jpg puis .png, fallback emoji
 function prodImg(item, extraStyle=''){
-    if(!item.img) return `<span class="prod-img-fallback" style="font-size:36px;">${item.emoji}</span>`;
-    // On essaie plusieurs extensions courantes
-    return `<img class="prod-img" src="${item.img}.png" style="${extraStyle}"
-        onerror="this.onerror=null;this.src='${item.img}.png';this.onerror=function(){this.style.display='none';this.parentNode.innerHTML='<span style=\\'font-size:36px;\\'>${item.emoji}</span>';}"
+    if(!item.img) return `<span class="prod-img-fallback" style="font-size:36px;">${item.emoji||'🍽️'}</span>`;
+    const base=item.img;
+    const emo=item.emoji||'🍽️';
+    return `<img class="prod-img" src="${base}.webp" style="${extraStyle}"
+        onerror="this.onerror=null;this.src='${base}.jpg';this.onerror=function(){this.onerror=null;this.src='${base}.png';this.onerror=function(){this.style.display='none';this.parentNode.innerHTML='<span style=\\'font-size:36px;\\'>${emo}</span>';};};"
         alt="${item.name}" loading="lazy">`;
 }
 
@@ -1090,11 +1208,25 @@ function renderAlaCarte(){
 
 function addAlaCarte(platIdx){
     const item=menuData.plats[platIdx];
-    // sauce par défaut = Ketchup
+    // Si la patate a une option viande → ouvrir d'abord le choix viande
+    if(item.viande&&item.viande.length){
+        openViandeChoice(item, platIdx, (viandeChoice)=>{
+            cart.push({name:item.name,price:item.price,basePrice:item.price,
+                detail:'Viande : '+viandeChoice,type:'alacarte',platIdx,
+                suppIdx:[],removedIngredients:[],sauceType:'base',
+                sauceChoice:menuData.saucesBase[0].name,viandeChoice,assaisonnementChoice:null});
+            updateCart();
+            toast('✓ '+item.name+' ajouté');
+            // Déclencher le pop-up upsell (produit seul uniquement)
+            triggerUpsellPopup();
+        });
+        return;
+    }
     cart.push({name:item.name,price:item.price,basePrice:item.price,detail:null,type:'alacarte',platIdx,
         suppIdx:[],removedIngredients:[],sauceType:'base',sauceChoice:menuData.saucesBase[0].name});
     updateCart();
     toast('✓ '+item.name+' ajouté');
+    triggerUpsellPopup();
 }
 
 // ─────────────── PERSONNALISER ───────────────
@@ -1419,6 +1551,7 @@ const wiz=(()=>{
         const platPrice=sel.plat.price+(sel.custData?sel.custData.suppIdx.reduce((s,i)=>s+menuData.supplements[i].price,0):0);
         lines.push({item:sel.plat,name:sel.plat.name,price:platPrice});
         if(sel.custData&&sel.custData.detail) lines[0].detail=sel.custData.detail;
+        else if(sel.custData&&sel.custData.viandeChoice) lines[0].detail='Viande : '+sel.custData.viandeChoice;
         if(sel.drink&&sel.drink!==false) lines.push({item:sel.drink,name:sel.drink.name,price:sel.drink.price});
         if(sel.dessert&&sel.dessert!==false) lines.push({item:sel.dessert,name:sel.dessert.name,price:sel.dessert.price});
 
@@ -1453,7 +1586,19 @@ const wiz=(()=>{
         openCustomFromWizard(platIdx,(data)=>{sel.custData=data;render();});
     }
 
-    function selectPlat(i){sel.plat=menuData.plats[i];sel.drink=null;sel.dessert=null;sel.custData=null;render();setTimeout(()=>{if(canAdvance())next();},300);}
+    function selectPlat(i){
+        const plat=menuData.plats[i];
+        if(plat.viande&&plat.viande.length){
+            openViandeChoice(plat, i, (viandeChoice)=>{
+                sel.plat=plat;sel.drink=null;sel.dessert=null;sel.custData=null;
+                if(!sel.custData) sel.custData={detail:'Viande : '+viandeChoice,suppIdx:[],removedIngredients:[],sauceType:'base',sauceChoice:menuData.saucesBase[0].name,viandeChoice,assaisonnementChoice:null};
+                render();
+                setTimeout(()=>{if(canAdvance())next();},300);
+            });
+            return;
+        }
+        sel.plat=plat;sel.drink=null;sel.dessert=null;sel.custData=null;render();setTimeout(()=>{if(canAdvance())next();},300);
+    }
     function selectDrink(i){sel.drink=menuData.boissons[i];sel.dessert=null;render();setTimeout(()=>{if(canAdvance())next();},300);}
     function skipDrink(){sel.drink=false;sel.dessert=false;render();setTimeout(()=>next(),300);}
     function selectDessert(i){sel.dessert=menuData.desserts[i];render();setTimeout(()=>{if(canAdvance())next();},300);}
@@ -1481,6 +1626,98 @@ const wiz=(()=>{
 
     return{next,prev,goToStep,render,selectPlat,selectDrink,skipDrink,selectDessert,skipDessert,addToCart,openCustomize};
 })();
+
+// ─────────────── CHOIX VIANDE (patate garnie) ───────────────
+let _viandeCallback=null;
+
+function openViandeChoice(item, platIdx, callback){
+    _viandeCallback=callback;
+    const el=document.getElementById('viande-overlay');
+    const titleEl=document.getElementById('viande-overlay-title');
+    const listEl=document.getElementById('viande-overlay-list');
+    titleEl.textContent='Choisissez votre viande';
+    listEl.innerHTML=item.viande.map(v=>`
+        <button class="viande-choice-btn" onclick="confirmViandeChoice('${v}')">
+            <span class="viande-choice-emoji">${v.toLowerCase().includes('poulet')?'🍗':'🥩'}</span>
+            <span class="viande-choice-name">${v}</span>
+            <span class="viande-choice-arrow">→</span>
+        </button>`).join('');
+    el.classList.add('open');
+}
+function confirmViandeChoice(v){
+    document.getElementById('viande-overlay').classList.remove('open');
+    if(_viandeCallback){_viandeCallback(v);_viandeCallback=null;}
+}
+function closeViandeOverlay(){
+    document.getElementById('viande-overlay').classList.remove('open');
+    _viandeCallback=null;
+}
+
+// ─────────────── UPSELL POPUP (produit seul) ───────────────
+let _upsellShownThisSession=false;
+
+function triggerUpsellPopup(){
+    setTimeout(()=>{
+        const lastItem=cart[cart.length-1];
+        if(!lastItem||lastItem.type==='menu') return;
+        renderUpsellPopup();
+        document.getElementById('upsell-overlay').classList.add('open');
+    },500);
+}
+
+function renderUpsellPopup(){
+    // Sauces — afficher le nom du fichier image s'il existe (ex: media/ketchup), sinon emoji
+    const saucesAll=menuData.saucesBase.concat(menuData.saucesMaison).slice(0,4);
+    const saucesHtml=saucesAll.map((s,i)=>{
+        const imgHtml=s.img
+            ? `<div class="upsell-item-img">${prodImg(s)}</div>`
+            : `<div class="upsell-item-icon">🥫</div>`;
+        return `<div class="upsell-item-card" onclick="addUpsellItem('sauce',${i})">
+            ${imgHtml}
+            <div class="upsell-item-name">${s.name}</div>
+            <div class="upsell-item-price">${s.price>0?'+'+fmt(s.price):'Incluse'}</div>
+        </div>`;
+    }).join('');
+
+    const boissonsHtml=menuData.boissons.slice(0,4).map((b,i)=>`
+        <div class="upsell-item-card" onclick="addUpsellItem('boisson',${i})">
+            <div class="upsell-item-img">${prodImg(b)}</div>
+            <div class="upsell-item-name">${b.name}</div>
+            <div class="upsell-item-price">+${fmt(b.price)}</div>
+        </div>`).join('');
+
+    document.getElementById('upsell-content').innerHTML=`
+        <div class="upsell-question">Vous voulez un petit truc en plus ?</div>
+        <div class="upsell-sub">Ou vous n'avez rien oublié ?</div>
+        <div class="upsell-section-title">🥫 Sauces</div>
+        <div class="upsell-grid">${saucesHtml}</div>
+        <div class="upsell-section-title">🥤 Boissons</div>
+        <div class="upsell-grid">${boissonsHtml}</div>
+    `;
+}
+
+function addUpsellItem(type,i){
+    if(type==='boisson'){
+        const b=menuData.boissons[i];
+        cart.push({name:b.name,price:b.price,detail:b.desc,type:'extra',suppIdx:[],removedIngredients:[],sauceType:null,sauceChoice:null});
+        toast('✓ '+b.name+' ajouté !');
+    } else {
+        // Pour une sauce : ajoute une sauce en tant que produit (au prix de la sauce maison, gratuit si base)
+        const allSauces=[...menuData.saucesBase,...menuData.saucesMaison];
+        const s=allSauces[i];
+        if(s.price>0){
+            cart.push({name:'Sauce '+s.name,price:s.price,detail:'Sauce maison',type:'extra',suppIdx:[],removedIngredients:[],sauceType:null,sauceChoice:null});
+            toast('✓ Sauce '+s.name+' ajoutée !');
+        } else {
+            toast('La sauce '+s.name+' est déjà incluse avec votre plat 😊');
+        }
+    }
+    updateCart();
+    document.getElementById('upsell-overlay').classList.remove('open');
+}
+function closeUpsellOverlay(){
+    document.getElementById('upsell-overlay').classList.remove('open');
+}
 
 // ─────────────── CART ───────────────
 
@@ -1535,6 +1772,7 @@ function renderCartContents(){
 
 function removeFromCart(i){
     cart.splice(i,1);
+    if(cart.length===0) _upsellShownThisSession=false;
     updateCart();
 }
 
@@ -1584,7 +1822,7 @@ function confirmPayment(){
 }
 
 // ─────────────── BACKDROP CLOSE ───────────────
-['tunnel-overlay','custom-overlay'].forEach(id=>{
+['tunnel-overlay','custom-overlay','viande-overlay','upsell-overlay'].forEach(id=>{
     document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 });
 
