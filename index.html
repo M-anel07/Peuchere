@@ -148,14 +148,7 @@
         .menu-item-simple .menu-item-visual { background:linear-gradient(135deg,#FFF3E0,#FFE0B2); }
         .simple-img { width:100%; height:100%; object-fit:cover; border-radius:11px; }
 
-        /* CART BAR */
-        .cart-bar { position:fixed; bottom:var(--bottom-nav); left:0; right:0; z-index:150; padding:10px 16px; display:none; }
-        .cart-bar.visible { display:block; }
-        .cart-bar-btn { width:100%; max-width:680px; margin:0 auto; background:var(--brand); color:#fff; border:none; border-radius:14px; padding:14px 20px; font-family:'Syne',sans-serif; font-size:15px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:space-between; box-shadow:0 6px 24px rgba(200,90,30,0.4); transition:background 0.2s; }
-        .cart-bar-btn:hover { background:var(--brand-dark); }
-        .cart-bar-left { display:flex; align-items:center; gap:10px; }
-        .cart-bar-count { background:rgba(255,255,255,0.22); border-radius:8px; padding:2px 8px; font-size:13px; font-weight:700; }
-        .cart-bar-total { font-size:16px; font-weight:800; }
+        /* CART BAR supprimé */
 
         /* OVERLAYS */
         .overlay { position:fixed; inset:0; z-index:300; background:rgba(20,10,5,0.55); display:none; align-items:flex-end; justify-content:center; }
@@ -397,6 +390,22 @@
         .rest-addr { font-size:11px; color:var(--text-muted); margin-top:2px; }
         .rest-radio { width:18px; height:18px; border-radius:50%; border:2px solid var(--border); flex-shrink:0; transition:all 0.15s; }
         .rest-radio.checked { background:var(--brand); border-color:var(--brand); }
+
+        /* OUT-OF-ZONE COLLECT SUGGESTION */
+        .address-collect-suggest {
+            display:none; margin-top:12px;
+            background:linear-gradient(135deg,#FFF5EC,var(--brand-light));
+            border:1.5px solid rgba(200,90,30,0.3); border-radius:12px; padding:14px;
+        }
+        .address-collect-suggest.visible { display:block; }
+        .acs-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--brand); margin-bottom:4px; }
+        .acs-sub { font-size:12px; color:var(--text-sub); margin-bottom:10px; line-height:1.5; }
+        .acs-btn {
+            width:100%; background:var(--brand); color:#fff; border:none; border-radius:10px;
+            padding:12px; font-family:'Syne',sans-serif; font-size:13px; font-weight:700;
+            cursor:pointer; transition:background 0.2s; display:flex; align-items:center; justify-content:center; gap:8px;
+        }
+        .acs-btn:hover { background:var(--brand-dark); }
 
         /* TOAST */
         .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(10px); background:#3D2B1A; color:#fff; padding:10px 20px; border-radius:10px; font-size:13px; font-weight:500; z-index:600; opacity:0; transition:all 0.25s; white-space:nowrap; pointer-events:none; }
@@ -690,13 +699,7 @@
     </div>
 </nav>
 
-<!-- CART BAR -->
-<div class="cart-bar" id="cart-bar">
-    <button class="cart-bar-btn" onclick="openCart()">
-        <div class="cart-bar-left"><span class="cart-bar-count" id="cart-bar-count">0</span> Voir mon panier</div>
-        <span class="cart-bar-total" id="cart-bar-total">0,00 €</span>
-    </button>
-</div>
+<!-- CART BAR supprimé -->
 
 <!-- OVERLAY TUNNEL -->
 <div class="overlay" id="tunnel-overlay">
@@ -730,6 +733,11 @@
                 <div class="address-input-label">Votre adresse de livraison</div>
                 <input class="address-input" id="address-input" type="text" placeholder="Ex : 12 rue de la République, Toulon" oninput="checkAddress()" autocomplete="street-address" />
                 <div class="address-check-status" id="address-status"></div>
+                <div class="address-collect-suggest" id="address-collect-suggest">
+                    <div class="acs-title">Votre adresse est hors zone de livraison</div>
+                    <div class="acs-sub">Pas de panique ! Vous pouvez passer votre commande en Click &amp; Collect et venir la récupérer en quelques minutes.</div>
+                    <button class="acs-btn" onclick="switchToCollect()">Passer en Click &amp; Collect →</button>
+                </div>
             </div>
             <button class="tunnel-next-btn" id="ts1-next" disabled onclick="tunnelConfirm()">Accéder à la carte →</button>
         </div>
@@ -747,16 +755,7 @@
     </div>
 </div>
 
-<!-- OVERLAY CART -->
-<div class="overlay" id="cart-overlay">
-    <div class="panel">
-        <div class="panel-header">
-            <h2 class="panel-title">Mon panier</h2>
-            <button class="panel-close" onclick="closeCart()">✕</button>
-        </div>
-        <div id="cart-contents"></div>
-    </div>
-</div>
+<!-- OVERLAY CART supprimé -->
 
 <div class="toast" id="toast"></div>
 
@@ -873,6 +872,7 @@ function showPage(page){
     if(page==='home') document.getElementById('nav-home').classList.add('active');
     if(page==='info') document.getElementById('nav-info').classList.add('active');
 }
+
 function goHome(){showPage('home');}
 function showCarte(){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -930,6 +930,7 @@ function openTunnel(preselect){
     document.getElementById('restaurant-wrap').style.display='none';
     document.getElementById('ts1-next').disabled=true;
     document.getElementById('address-status').className='address-check-status';
+    document.getElementById('address-collect-suggest').classList.remove('visible');
     if(preselect) selectMode(preselect);
     document.getElementById('tunnel-overlay').classList.add('open');
 }
@@ -981,17 +982,33 @@ function checkAddress(){
     const val=document.getElementById('address-input').value.toLowerCase().trim();
     const statusEl=document.getElementById('address-status');
     const nextBtn=document.getElementById('ts1-next');
-    if(val.length<5){statusEl.className='address-check-status';nextBtn.disabled=true;return;}
+    const collectSuggest=document.getElementById('address-collect-suggest');
+    if(val.length<5){
+        statusEl.className='address-check-status';
+        nextBtn.disabled=true;
+        collectSuggest.classList.remove('visible');
+        return;
+    }
     const inZone=deliveryZones.some(z=>val.includes(z));
     if(inZone){
         statusEl.textContent='✓ Adresse dans notre zone de livraison !';
         statusEl.className='address-check-status ok';
         nextBtn.disabled=false;
+        collectSuggest.classList.remove('visible');
     } else {
-        statusEl.textContent='✗ Adresse hors zone de livraison pour le moment.';
+        statusEl.textContent='';
         statusEl.className='address-check-status ko';
         nextBtn.disabled=true;
+        collectSuggest.classList.add('visible');
     }
+}
+
+function switchToCollect(){
+    // Bascule vers Click & Collect dans le tunnel
+    document.getElementById('address-input').value='';
+    document.getElementById('address-collect-suggest').classList.remove('visible');
+    document.getElementById('address-status').className='address-check-status';
+    selectMode('collect');
 }
 
 function tunnelConfirm(){
@@ -1457,17 +1474,22 @@ const wiz=(()=>{
 })();
 
 // ─────────────── CART ───────────────
+
 function updateCart(){
     const count=cart.length;
     const total=cart.reduce((s,i)=>s+i.price,0);
     document.getElementById('cart-badge').textContent=count;
-    document.getElementById('cart-bar-count').textContent=count;
-    document.getElementById('cart-bar-total').textContent=fmt(total);
-    document.getElementById('cart-bar').classList.toggle('visible',count>0);
-    if(document.getElementById('cart-overlay').classList.contains('open')) renderCartContents();
+
+    // panier direct paiement
 }
-function openCart(){document.getElementById('cart-overlay').classList.add('open');renderCartContents();}
-function closeCart(){document.getElementById('cart-overlay').classList.remove('open');}
+
+
+
+function flashCartBar(){
+    // cart bar supprimée
+}
+function openCart(){if(cart.length===0){toast('Votre panier est vide');return;}renderPaymentPage();showPage('payment');}
+function closeCart(){}
 
 function renderCartContents(){
     const el=document.getElementById('cart-contents');
@@ -1499,7 +1521,10 @@ function renderPaymentPage(){
         <div class="payment-total"><span class="payment-total-label">Total</span><span class="payment-total-amount">${fmt(total)}</span></div>`;
     selectedPaymentMethod=null;
     document.getElementById('pay-btn').disabled=true;
-    document.getElementById('payment-methods').innerHTML=paymentMethods.map(m=>`
+    const availableMethods=orderContext.mode==='collect'
+        ? paymentMethods.filter(m=>m.id!=='cash')
+        : paymentMethods;
+    document.getElementById('payment-methods').innerHTML=availableMethods.map(m=>`
         <div class="pm-card" id="pm-${m.id}" onclick="selectPayment('${m.id}')">
             <div class="pm-icon">${m.icon}</div>
             <div class="pm-label">${m.label}</div>
@@ -1519,7 +1544,7 @@ function confirmPayment(){
 }
 
 // ─────────────── BACKDROP CLOSE ───────────────
-['tunnel-overlay','custom-overlay','cart-overlay'].forEach(id=>{
+['tunnel-overlay','custom-overlay'].forEach(id=>{
     document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 });
 
