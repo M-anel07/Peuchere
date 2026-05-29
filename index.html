@@ -702,7 +702,7 @@
         <div class="info-page-title">Infos &amp; Contact</div>
 
         <!-- HORAIRES -->
-        <div class="info-sub-title">🕐 Horaires d'ouverture</div>
+        <div class="info-sub-title">Horaires d'ouverture</div>
         <div class="info-card" style="padding:0;overflow:hidden;">
             <table class="hours-table">
                 <tr><td class="hours-day">Lundi</td><td class="hours-time">10h00 – 02h00</td></tr>
@@ -716,7 +716,7 @@
         </div>
 
         <!-- CARTE GOOGLE MAP -->
-        <div class="info-sub-title">📍 Nous trouver</div>
+        <div class="info-sub-title">Nous trouver</div>
         <div class="info-card" style="padding:0;overflow:hidden;border-radius:var(--radius);">
             <!-- Sélecteur de restaurant -->
             <div style="display:flex;gap:0;border-bottom:1px solid var(--border);" id="map-resto-tabs">
@@ -730,7 +730,7 @@
                 referrerpolicy="no-referrer-when-downgrade"
                 title="Localisation Peuchère"></iframe>
             <div style="padding:14px 16px;border-top:1px solid var(--border);">
-                <div id="map-resto-name" style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">📌 Peuchère – Toulon Centre</div>
+                <div id="map-resto-name" style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Peuchère – Toulon Centre</div>
                 <div id="map-resto-addr" style="font-size:12px;color:var(--text-muted);">12 rue Jean Jaurès, 83000 Toulon</div>
                 <a id="map-resto-link" href="https://maps.google.com/?q=12+rue+Jean+Jaures+83000+Toulon" target="_blank"
                    style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:var(--brand);color:#fff;padding:7px 14px;border-radius:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;text-decoration:none;">
@@ -1869,7 +1869,7 @@ function switchMapResto(key, btn) {
     // Mise à jour de l'iframe
     document.getElementById('map-iframe').src = resto.src;
     // Mise à jour des infos texte
-    document.getElementById('map-resto-name').textContent = '📌 ' + resto.name;
+    document.getElementById('map-resto-name').textContent = resto.name;
     document.getElementById('map-resto-addr').textContent = resto.addr;
     document.getElementById('map-resto-link').href = resto.link;
     // Mise à jour des onglets actifs
