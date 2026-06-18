@@ -15,7 +15,7 @@
             --shadow: 0 2px 20px rgba(139,58,16,0.08); --shadow-lg: 0 8px 40px rgba(139,58,16,0.18);
             --bottom-nav: 72px; --header-h: 60px;
         }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth;  }
         body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; font-size:16px; padding-bottom:var(--bottom-nav); overscroll-behavior:none; -webkit-tap-highlight-color:transparent; }
         h1,h2,h3,h4 { font-family:'Syne',sans-serif; line-height:1.2; }
 
@@ -592,6 +592,33 @@
             gap: 10px;
             margin-bottom: 8px;
         }
+
+        /* --- ADAPTATION POUR ÉCRANS VERTICAUX / SMARTPHONES --- */
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px; /* On réduit légèrement la police globale */
+    }
+
+    /* Exemple : Si tes cartes de plats ou ton conteneur ont une largeur fixe */
+    .container, .menu-grid, .plat-carte {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Si tes éléments s'alignent horizontalement (flex), on les passe les uns sous les autres */
+    .flex-header, .plat-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center;
+    }
+
+    /* Ajustement des images pour qu'elles ne débordent pas */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
 
     </style>
 </head>
